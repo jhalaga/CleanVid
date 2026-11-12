@@ -119,7 +119,7 @@ async function fetchOpenSubtitles(title, apiKey) {
   }
 
   const subtitleResponse = await fetch(downloadUrl.href, {
-    headers: { 'X-User-Agent': 'CleanVid v1.3.0' },
+    headers: { 'X-User-Agent': `CleanVid v${chrome.runtime.getManifest().version}` },
   });
   if (!subtitleResponse.ok) {
     throw new Error(`OpenSubtitles subtitle download failed (HTTP ${subtitleResponse.status}).`);

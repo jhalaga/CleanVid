@@ -247,6 +247,7 @@ try {
     (await engine(`JSON.stringify([...__cleanvidEngine.jobs.get(${JSON.stringify(videoId)})?.words || []])`)) || '[]'
   );
   notes.push(`analysis wall time: ${analyseMs} ms, ${words.length} words heard`);
+  notes.push(`word timing diagnostic: ${JSON.stringify(words.filter(w => w.t0 < 12).map(w => ({text:w.text,t0:w.t0,t1:w.t1})))}`);
   notes.push(`panel: ${JSON.stringify(panel)}`);
   notes.push(`engine: ${engineLog.filter((l) => /analysed|retry|failed|ready/.test(l)).slice(-8).join(' | ')}`);
 
@@ -264,6 +265,9 @@ try {
   fs.writeFileSync(path.join(ROOT, 'tools', 'fixtures', 'e2e-audio-page.png'), Buffer.from(shot.data, 'base64'));
 
   // --- Reload: saved analysis must be reused ---------------------------------------
+  const coverageBefore = JSON.parse((await engine(
+    `JSON.stringify(__cleanvidEngine.jobs.get(${JSON.stringify(videoId)})?.coverage || [])`
+  )) || '[]');
   const analysedBefore = engineLog.filter((l) => l.includes(`analysed ${videoId}`)).length;
   await page.send('Page.reload', { ignoreCache: false });
   await page.send('Page.bringToFront');
@@ -281,7 +285,13 @@ try {
     .slice(analysedBefore)
     .filter((l) => {
       const m = l.match(/ (\d+\.\d+)–(\d+\.\d+) /);
-      return m && Number(m[1]) < Math.max(...expected.map((e) => e.at), 0) + 1;
+      if (!m) return false;
+      const start = Number(m[1]);
+      const end = Number(m[2]);
+      // New audio may fill an uncached gap near the start after reload.
+      // Only count windows that repeat a previously covered range. Allow
+      // 50 ms for rounded log timestamps and range-merging tolerances.
+      return coverageBefore.some(([a, b]) => Math.min(end, b) - Math.max(start, a) > 0.05);
     });
   notes.push(`after reload: ${cached ? cached.count : '?'} moments shown within ${cachedMs} ms; re-analysed windows over the cached range: ${overlapping.length}`);
   assert.ok(cached && Number(cached.count) >= expected.length, 'Saved analysis should be shown after a reload.');

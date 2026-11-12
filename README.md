@@ -138,6 +138,7 @@ The bridge routes the `<video>` through a `GainNode`. If YouTube itself creates 
 ```bash
 npm test            # unit tests: matcher, caption parsers, media parsing, CTC alignment, scheduling
 npm run check       # manifest, file references, syntax, icon dimensions
+npm run package     # reproducible Chrome/Edge ZIP + checksum in dist/ (requires Python 3)
 npm run e2e         # headless Chrome smoke test with mocked captions (no models needed)
 npm run e2e:audio   # real YouTube video through the full audio pipeline (downloads models once)
 npm run icons       # regenerate the PNG icons
