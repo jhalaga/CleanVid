@@ -1,0 +1,414 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CleanVid — Settings</title>
+    <link rel="stylesheet" href="options.css" />
+  </head>
+  <body>
+    <div class="page">
+      <header class="hero">
+        <div class="hero-top">
+          <div class="brand">
+            <span class="logo" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M12 2.5l7.5 3v5.7c0 4.7-3.1 8.4-7.5 10.3-4.4-1.9-7.5-5.6-7.5-10.3V5.5l7.5-3z"
+                  fill="currentColor"
+                  opacity=".16"
+                />
+                <path
+                  d="M12 4.2l5.8 2.3v4.7c0 3.8-2.4 6.8-5.8 8.4-3.4-1.6-5.8-4.6-5.8-8.4V6.5L12 4.2z"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.7"
+                />
+                <path
+                  d="M9.4 11.6l1.8 1.8 3.6-3.9"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.9"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </span>
+            <span class="brand-text"><strong>CleanVid</strong><span>Settings</span></span>
+          </div>
+          <span id="version" class="version">v2.0.0</span>
+        </div>
+        <h1>Profanity off. Everything else on.</h1>
+        <p class="hero-sub">
+          CleanVid listens to the audio with on-device speech recognition,
+          pins every flagged word to its exact moment, and mutes it. Captions
+          are scanned too, as a second opinion. Audio and transcripts never
+          leave your computer. The optional OpenSubtitles lookup sends only the
+          video title and your API key, and only when you turn it on.
+        </p>
+        <div class="hero-pills">
+          <span id="heroWords" class="hero-pill">0 tracked words</span>
+          <span id="heroSensitivity" class="hero-pill">Smart matching</span>
+          <span class="hero-pill accent"><span class="pulse-dot"></span>Local analysis</span>
+        </div>
+      </header>
+
+      <main>
+        <section class="card audio-card" id="audioCard">
+          <div class="card-head split">
+            <div>
+              <h2>Audio detection</h2>
+              <p class="card-sub">
+                Whisper transcribes the audio and wav2vec2 aligns each word to within ~20 ms.
+                Everything runs locally. Results are saved per video, so rewatching never repeats the work.
+              </p>
+            </div>
+            <span id="modelBadge" class="model-badge">Checking…</span>
+          </div>
+
+          <div class="audio-grid">
+            <div>
+              <label class="setting-row">
+                <span class="setting-copy">
+                  <strong>Listen to the audio</strong>
+                  <small>Find swear words captions hide or skip. Captions are still scanned as well.</small>
+                </span>
+                <span class="toggle">
+                  <input id="audioEnabled" type="checkbox" />
+                  <span class="toggle-ui"></span>
+                </span>
+              </label>
+
+              <div class="field">
+                <label for="modelPack">Model pack</label>
+                <select id="modelPack"></select>
+                <p class="hint" id="modelPackHint"></p>
+              </div>
+
+              <div class="model-progress" id="modelProgress" hidden>
+                <div class="model-progress-meta"><span id="modelProgressLabel">Downloading…</span><span id="modelProgressValue"></span></div>
+                <div class="model-track"><div class="model-fill" id="modelProgressBar"></div></div>
+              </div>
+
+              <div class="model-actions">
+                <button id="modelDownload" class="btn primary" type="button">Download models</button>
+                <button id="modelRemove" class="btn danger-ghost" type="button">Remove models</button>
+              </div>
+            </div>
+
+            <div>
+              <div class="field">
+                <label for="muteStyle">How to censor</label>
+                <select id="muteStyle">
+                  <option value="silence">Silence (smooth fade)</option>
+                  <option value="bleep">Bleep tone</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <div class="field-label">
+                  <label for="audioPadding">Audio mute padding</label>
+                  <output id="audioPaddingValue" for="audioPadding">70 ms</output>
+                </div>
+                <input id="audioPadding" type="range" min="0" max="300" step="10" />
+                <p class="hint">Words found in the audio are timed precisely, so they need much less padding than captions.</p>
+              </div>
+
+              <label class="setting-row compact">
+                <span class="setting-copy">
+                  <strong>Pause until analyzed</strong>
+                  <small>If playback reaches audio that has not been analyzed yet, pause briefly until it is.</small>
+                </span>
+                <span class="toggle">
+                  <input id="pauseOnUnscanned" type="checkbox" />
+                  <span class="toggle-ui"></span>
+                </span>
+              </label>
+
+              <label class="setting-row compact">
+                <span class="setting-copy">
+                  <strong>Pre-scan the whole video</strong>
+                  <small>Experimental. If YouTube exposes a direct audio stream, CleanVid fetches it in the background to analyze the whole video early. YouTube rarely does this today; otherwise audio is analyzed as the player buffers it.</small>
+                </span>
+                <span class="toggle">
+                  <input id="audioPrefetch" type="checkbox" />
+                  <span class="toggle-ui"></span>
+                </span>
+              </label>
+
+              <div class="cache-row">
+                <span class="setting-copy">
+                  <strong>Saved analysis</strong>
+                  <small id="cacheStats">—</small>
+                </span>
+                <button id="cacheClear" class="btn ghost" type="button">Clear</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div class="grid two">
+          <section class="card">
+            <div class="card-head">
+              <div>
+                <h2>Playback</h2>
+                <p class="card-sub">How CleanVid behaves while a video plays.</p>
+              </div>
+            </div>
+
+            <label class="setting-row">
+              <span class="setting-copy">
+                <strong>Enable CleanVid</strong>
+                <small>Master switch for muting and caption masking.</small>
+              </span>
+              <span class="toggle">
+                <input id="enabled" type="checkbox" />
+                <span class="toggle-ui"></span>
+              </span>
+            </label>
+
+            <label class="setting-row">
+              <span class="setting-copy">
+                <strong>Mute flagged audio</strong>
+                <small>Silence the video during each detected word.</small>
+              </span>
+              <span class="toggle">
+                <input id="muteAudio" type="checkbox" />
+                <span class="toggle-ui"></span>
+              </span>
+            </label>
+
+            <label class="setting-row">
+              <span class="setting-copy">
+                <strong>Mask captions</strong>
+                <small>Replace flagged words with asterisks on screen.</small>
+              </span>
+              <span class="toggle">
+                <input id="maskCaptions" type="checkbox" />
+                <span class="toggle-ui"></span>
+              </span>
+            </label>
+
+            <div class="field">
+              <div class="field-label">
+                <label for="mutePadding">Mute padding</label>
+                <output id="mutePaddingValue" for="mutePadding">180 ms</output>
+              </div>
+              <input id="mutePadding" type="range" min="0" max="500" step="20" />
+              <p class="hint">
+                Extra time added before and after a flagged word. More padding
+                hides clipped syllables; less keeps dialogue tight.
+              </p>
+            </div>
+
+            <div class="field">
+              <label for="captionLanguage">Caption language</label>
+              <select id="captionLanguage"></select>
+              <p class="hint">
+                Auto prefers English manual captions, then auto-generated
+                English, then the first available track.
+              </p>
+            </div>
+          </section>
+
+          <section class="card">
+            <div class="card-head">
+              <div>
+                <h2>Sensitivity</h2>
+                <p class="card-sub">
+                  How much spelling tolerance to allow. Exact matches are always
+                  caught.
+                </p>
+              </div>
+            </div>
+            <div id="sensitivityList" class="sensitivity-list"></div>
+
+            <div class="divider"></div>
+
+            <label class="setting-row compact">
+              <span class="setting-copy">
+                <strong>Transcript fallback</strong>
+                <small>Use the YouTube transcript panel when captions are unavailable.</small>
+              </span>
+              <span class="toggle">
+                <input id="useTranscriptFallback" type="checkbox" />
+                <span class="toggle-ui"></span>
+              </span>
+            </label>
+
+            <label class="setting-row compact">
+              <span class="setting-copy">
+                <strong>Scan YouTube English translations</strong>
+                <small>On by default. Checks translations of available tracks alongside the original captions.</small>
+              </span>
+              <span class="toggle">
+                <input id="tryYouTubeTranslation" type="checkbox" />
+                <span class="toggle-ui"></span>
+              </span>
+            </label>
+
+            <label class="setting-row compact">
+              <span class="setting-copy">
+                <strong>Also check OpenSubtitles</strong>
+                <small>When enabled, asks for OpenSubtitles site access and sends this video’s title. Alternate versions can have different timing.</small>
+              </span>
+              <span class="toggle">
+                <input id="useOpenSubtitles" type="checkbox" />
+                <span class="toggle-ui"></span>
+              </span>
+            </label>
+
+            <div class="external-key">
+              <label for="openSubtitlesKey">OpenSubtitles API key</label>
+              <div class="external-key-row">
+                <input id="openSubtitlesKey" type="password" autocomplete="off" spellcheck="false" placeholder="Paste your API key" />
+                <button id="saveOpenSubtitlesKey" class="btn ghost" type="button">Save key</button>
+              </div>
+              <small id="openSubtitlesKeyStatus">Stored locally; sent only when lookup is enabled.</small>
+              <small>Subtitles provided by <a href="https://www.opensubtitles.com" target="_blank" rel="noreferrer">OpenSubtitles.com</a> when this source is used.</small>
+            </div>
+
+            <label class="setting-row compact">
+              <span class="setting-copy">
+                <strong>Highlight the current moment</strong>
+                <small>Light up the active timestamp in the floating panel.</small>
+              </span>
+              <span class="toggle">
+                <input id="highlightCurrent" type="checkbox" />
+                <span class="toggle-ui"></span>
+              </span>
+            </label>
+
+            <label class="setting-row compact">
+              <span class="setting-copy">
+                <strong>Start panel collapsed</strong>
+                <small>Show only the floating shield button until you open it.</small>
+              </span>
+              <span class="toggle">
+                <input id="panelCollapsed" type="checkbox" />
+                <span class="toggle-ui"></span>
+              </span>
+            </label>
+          </section>
+        </div>
+
+        <section class="card">
+          <div class="card-head split">
+            <div>
+              <h2>Your word list</h2>
+              <p class="card-sub">
+                Whole words, phrases and censored spellings are all supported.
+                Add your own or remove anything you are fine with hearing.
+              </p>
+            </div>
+            <span id="wordTotal" class="pill">0 words</span>
+          </div>
+
+          <div class="word-toolbar">
+            <input
+              id="wordSearch"
+              class="search"
+              type="search"
+              placeholder="Filter the list…"
+              autocomplete="off"
+            />
+            <button id="addDefaults" class="btn ghost" type="button">Add defaults</button>
+            <button id="resetDefaults" class="btn danger-ghost" type="button">Reset list</button>
+          </div>
+
+          <form id="addForm" class="add-row" autocomplete="off">
+            <input
+              id="newWord"
+              type="text"
+              maxlength="64"
+              placeholder="Add a word or phrase — e.g. motherfucker, f*ck, dumb ass"
+            />
+            <button class="btn primary" type="submit">Add word</button>
+          </form>
+
+          <div id="wordChips" class="chips"></div>
+          <p id="noWords" class="empty-note" hidden></p>
+
+          <details class="bulk">
+            <summary>Bulk edit the list</summary>
+            <p class="hint">
+              One word or phrase per line. Commas and semicolons also work.
+              Saving replaces the entire list.
+            </p>
+            <textarea id="bulkWords" spellcheck="false" rows="10"></textarea>
+            <div class="bulk-actions">
+              <button id="bulkSave" class="btn primary" type="button">Save list</button>
+              <span id="bulkHint" class="bulk-hint"></span>
+            </div>
+          </details>
+        </section>
+
+        <section class="card">
+          <div class="card-head">
+            <div>
+              <h2>Try the matcher</h2>
+              <p class="card-sub">
+                Paste a caption line to see exactly what CleanVid would flag with
+                your current list and sensitivity.
+              </p>
+            </div>
+          </div>
+          <label class="sr-only" for="tester">Caption text to test</label>
+          <textarea
+            id="tester"
+            rows="3"
+            spellcheck="false"
+            placeholder="Paste a caption line, e.g. Holy sh*t, that was d*mn amazing."
+          ></textarea>
+          <div class="tester-actions">
+            <button id="runTest" class="btn primary" type="button">Test text</button>
+            <span id="testSummary" class="pill">—</span>
+          </div>
+          <div id="testPreview" class="test-preview"></div>
+        </section>
+
+        <section class="card privacy">
+          <div class="privacy-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <path
+                d="M12 3l7 3v5.4c0 4.4-2.9 7.9-7 9.6-4.1-1.7-7-5.2-7-9.6V6l7-3z"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.6"
+              />
+              <path
+                d="M12 9v4.5M12 16.5v.1"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+              />
+            </svg>
+          </div>
+          <div>
+            <h2>Private by design</h2>
+            <p>
+              By default, captions are read inside the YouTube tab and matched
+              locally. If you enable OpenSubtitles, CleanVid sends the video
+              title and your saved API key to OpenSubtitles to look for an
+              alternate subtitle; the returned text is analyzed locally. No
+              analytics or remote code is used.
+            </p>
+          </div>
+        </section>
+      </main>
+
+      <footer class="page-footer">
+        <span>CleanVid <span id="footerVersion">v1.3.0</span></span>
+        <span>Built for Chrome and Edge · Manifest V3</span>
+      </footer>
+    </div>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+    <script src="../shared/constants.js"></script>
+    <script src="../shared/matching.js"></script>
+    <script src="options.js"></script>
+    <script src="../shared/engine-client.js"></script>
+    <script src="audio-settings.js"></script>
+  </body>
+</html>
