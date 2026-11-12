@@ -80,4 +80,4 @@ Data declarations must match the store's definitions. The extension processes we
 
 The Chrome draft is saved at https://chrome.google.com/webstore/devconsole/408020c3-c13a-46d8-9fd2-9432afe39baf/ehepbfcjgmmpagkaedffoeaigkgldjgl/edit/listing with package, graphics, copy, privacy declarations and reviewer instructions. Category is Tools, language English, distribution free/public/all regions. Submit for review is enabled; nothing has been submitted. See RELEASE-STATUS.md for exact recorded disclosures.
 
-Edge's isolated full-audio test passes. Its draft is not yet created because the account requires Edge Add-ons developer enrollment. Country/account type confirmation from the owner is pending; no registration terms have been accepted.
+Edge's isolated full-audio test passes. Its draft is not yet created because the account requires Edge Add-ons developer enrollment. The owner confirmed Slovakia / Individual / Jozef Halaga, and these details are selected in the enrollment form. The required address and phone fields remain blank; no registration terms have been accepted. Microsoft says the contact address is visible in the developer profile.

@@ -5,7 +5,7 @@ Prepared November 12, 2026. **Not submitted to either store.**
 Chrome draft is now complete and saved. The dashboard enables **Submit for review**:
 https://chrome.google.com/webstore/devconsole/408020c3-c13a-46d8-9fd2-9432afe39baf/ehepbfcjgmmpagkaedffoeaigkgldjgl/edit/listing
 
-Edge package testing passes, but the Edge store draft is blocked on new developer enrollment. Country and account type are immutable after enrollment; owner confirmation of Slovakia / Individual / Jozef Halaga has been requested and is pending.
+Edge package testing passes, but the Edge store draft is blocked on new developer enrollment. The owner confirmed Slovakia / Individual / Jozef Halaga. Country and account type have been selected; registration now requires the owner's address, phone number, and developer-agreement acceptance.
 
 ## Available materials
 
@@ -34,14 +34,14 @@ Edge dashboard: https://partner.microsoft.com/en-us/dashboard/home
 
 Native Edge control resumed successfully. Chrome accepted the 2.0.0 package and saved the English Tools listing, description, homepage/support links, icon, two screenshots, small promotional tile, permission explanations, privacy-policy URL, data-use disclosures, and reviewer setup instructions. Free/public/all-region distribution is saved. Data categories selected are authentication information (optional user-provided subtitle API key), web history (video IDs/titles), and website content. All three limited-use certifications are selected. A transient privacy-save error cleared on retry; the dashboard confirmed Item saved and enabled Submit for review. No review submission has been sent.
 
-The Edge Add-ons program is not enrolled. Its registration page requests an immutable country and account type before continuing:
+The Edge Add-ons program is not enrolled. Its registration form now has Slovakia / Individual selected, Jozef Halaga as publisher, the project repository as website, and English as preferred email language:
 https://partner.microsoft.com/en-us/dashboard/account/exp/enrollnow/msedgeaddons
 
-No enrollment details or registration agreements have been submitted. Owner confirmation is pending.
+Registration has not been submitted and no agreement has been accepted. The required address and phone fields are blank. Microsoft states that customers can view the contact address in the developer profile; the owner needs to provide the intended address and review the developer agreement.
 
 ## Remaining before submission
 
-1. Obtain confirmed Edge enrollment details; let the account owner review any registration agreement or identity/contact declarations if required.
+1. Have the owner enter the intended developer-profile address and phone number, validate the address, and review/accept Microsoft's registration agreement.
 2. Complete Edge enrollment, then create its draft with the tested package, prepared artwork, copy and disclosures.
 3. Review the completed Chrome draft with the owner before submitting it for review. Chrome currently shows no missing required fields.
 4. Continue investigating if the original intermittent missed-word case recurs. Detection is probabilistic and is not a guarantee.
