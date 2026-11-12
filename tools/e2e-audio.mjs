@@ -41,7 +41,7 @@ const BASELINES = {
 const expected = BASELINES[videoId] || [];
 const TOLERANCE = 0.5;
 
-const profile = path.join(os.tmpdir(), 'cleanvid-e2e-audio-profile');
+const profile = process.env.CLEANVID_AUDIO_TEST_PROFILE || path.join(os.tmpdir(), 'cleanvid-e2e-audio-profile');
 if (fresh) fs.rmSync(profile, { recursive: true, force: true });
 fs.mkdirSync(profile, { recursive: true });
 

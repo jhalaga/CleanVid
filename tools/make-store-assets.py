@@ -62,6 +62,16 @@ ImageDraw.Draw(mask).rounded_rectangle((0, 0, settings.width, settings.height), 
 image.paste(settings, (58, 120), mask)
 image.save(OUT / "02-settings.png")
 icon.save(OUT / "icon128.png")
+tile = Image.new("RGB", (440, 280), "#0b1118")
+td = ImageDraw.Draw(tile)
+td.ellipse((245, -105, 570, 220), fill="#112b2b")
+small_icon = icon.resize((72, 72), Image.Resampling.LANCZOS)
+tile.paste(small_icon, (28, 30), small_icon)
+td.text((116, 42), "CleanVid", font=font(36, True), fill="#e9f1f8")
+td.text((32, 134), "Profanity off.", font=font(30, True), fill="#e9f1f8")
+td.text((32, 174), "Everything else on.", font=font(30, True), fill="#4fe3b3")
+td.text((32, 235), "A local profanity filter for YouTube", font=font(18), fill="#8fa3b7")
+tile.save(OUT / "03-small-promo.png")
 for path in sorted(OUT.glob("*.png")):
     with Image.open(path) as item:
         print(f"{path.name}: {item.width} x {item.height}")

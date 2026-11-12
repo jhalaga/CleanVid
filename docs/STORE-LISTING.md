@@ -18,7 +18,7 @@ Privacy policy: https://github.com/jhalaga/CleanVid/blob/main/docs/PRIVACY.md
 
 Suggested distribution: Free. No purchases, subscriptions, or advertisements.
 
-Graphics: docs/store-assets/01-compact-panel.png and 02-settings.png (1280 × 800); icon128.png (128 × 128). The first graphic identifies its example caption detections as mocked test data.
+Graphics: docs/store-assets/01-compact-panel.png and 02-settings.png (1280 × 800); 03-small-promo.png (440 × 280); icon128.png (128 × 128). The first graphic identifies its example caption detections as mocked test data.
 
 ### Detailed description
 
@@ -78,4 +78,6 @@ Data declarations must match the store's definitions. The extension processes we
 
 ## Submission state
 
-This document is prepared copy, not evidence that either store draft was saved. Browser automation stopped during dashboard inspection because the current Edge URL could not be verified. The Chrome dashboard could not be scripted through the browser extension; native computer use stopped before any dashboard changes. The Edge account home showed no workspaces; verify Edge Add-ons enrollment/access before creating its draft. No registration terms were accepted, no packages uploaded, and nothing submitted for review.
+The Chrome draft is saved at https://chrome.google.com/webstore/devconsole/408020c3-c13a-46d8-9fd2-9432afe39baf/ehepbfcjgmmpagkaedffoeaigkgldjgl/edit/listing with package, graphics, copy, privacy declarations and reviewer instructions. Category is Tools, language English, distribution free/public/all regions. Submit for review is enabled; nothing has been submitted. See RELEASE-STATUS.md for exact recorded disclosures.
+
+Edge's isolated full-audio test passes. Its draft is not yet created because the account requires Edge Add-ons developer enrollment. Country/account type confirmation from the owner is pending; no registration terms have been accepted.
