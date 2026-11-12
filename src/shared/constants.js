@@ -1,6 +1,6 @@
 /**
  * CleanVid — shared constants and storage helpers.
- * Loaded as a classic script by the content script, popup, options page and
+ * Loaded as a classic script by the content script, options page and
  * service worker, so it exposes a single global namespace instead of modules.
  */
 (() => {

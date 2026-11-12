@@ -52,7 +52,7 @@ async function fetchOpenSubtitles(title, apiKey) {
   const apiHeaders = {
     Accept: 'application/json',
     'Api-Key': apiKey,
-    'X-User-Agent': 'CleanVid v1.3.0',
+    'X-User-Agent': `CleanVid v${chrome.runtime.getManifest().version}`,
   };
   const searchUrl = new URL('https://api.opensubtitles.com/api/v1/subtitles');
   searchUrl.searchParams.set('languages', 'en');

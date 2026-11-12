@@ -41,7 +41,7 @@
         <h1>Profanity off. Everything else on.</h1>
         <p class="hero-sub">
           CleanVid listens to the audio with on-device speech recognition,
-          pins every flagged word to its exact moment, and mutes it. Captions
+          finds flagged words with word-level timing, and mutes them. Captions
           are scanned too, as a second opinion. Audio and transcripts never
           leave your computer. The optional OpenSubtitles lookup sends only the
           video title and your API key, and only when you turn it on.
@@ -59,8 +59,9 @@
             <div>
               <h2>Audio detection</h2>
               <p class="card-sub">
-                Whisper transcribes the audio and wav2vec2 aligns each word to within ~20 ms.
-                Everything runs locally. Results are saved per video, so rewatching never repeats the work.
+                English speech recognition runs locally, with word-level audio alignment.
+                Captions can still be scanned in other languages. Saved analysis is reused when available;
+                clearing it or changing models can require another scan. Detection can miss words.
               </p>
             </div>
             <span id="modelBadge" class="model-badge">Checking…</span>
@@ -170,7 +171,7 @@
             <label class="setting-row">
               <span class="setting-copy">
                 <strong>Mute flagged audio</strong>
-                <small>Silence the video during each detected word.</small>
+                <small>Silence or bleep flagged moments, using your censoring choice above.</small>
               </span>
               <span class="toggle">
                 <input id="muteAudio" type="checkbox" />
@@ -191,12 +192,12 @@
 
             <div class="field">
               <div class="field-label">
-                <label for="mutePadding">Mute padding</label>
+                <label for="mutePadding">Caption mute padding</label>
                 <output id="mutePaddingValue" for="mutePadding">180 ms</output>
               </div>
               <input id="mutePadding" type="range" min="0" max="500" step="20" />
               <p class="hint">
-                Extra time added before and after a flagged word. More padding
+                Extra time around words found in captions. Audio detections use the separate audio mute padding above. More padding
                 hides clipped syllables; less keeps dialogue tight.
               </p>
             </div>
@@ -217,7 +218,7 @@
                 <h2>Sensitivity</h2>
                 <p class="card-sub">
                   How much spelling tolerance to allow. Exact matches are always
-                  caught.
+                  flagged in the text being scanned; speech recognition can still miss words.
                 </p>
               </div>
             </div>
@@ -281,8 +282,8 @@
 
             <label class="setting-row compact">
               <span class="setting-copy">
-                <strong>Start panel collapsed</strong>
-                <small>Show only the floating shield button until you open it.</small>
+                <strong>Keep panel collapsed</strong>
+                <small>The toolbar icon and floating shield toggle the same panel. Your last open or collapsed state is remembered; the shield stays visible.</small>
               </span>
               <span class="toggle">
                 <input id="panelCollapsed" type="checkbox" />
@@ -349,7 +350,7 @@
               <h2>Try the matcher</h2>
               <p class="card-sub">
                 Paste a caption line to see exactly what CleanVid would flag with
-                your current list and sensitivity.
+                your current list and sensitivity. This tests text matching, not speech recognition.
               </p>
             </div>
           </div>
@@ -387,8 +388,10 @@
           <div>
             <h2>Private by design</h2>
             <p>
-              By default, captions are read inside the YouTube tab and matched
-              locally. If you enable OpenSubtitles, CleanVid sends the video
+              Audio and captions are analyzed locally. English speech models are
+              downloaded from Hugging Face when you choose to install them;
+              your audio and transcripts are not uploaded. Saved analysis can be
+              cleared above. If you enable OpenSubtitles, CleanVid sends the video
               title and your saved API key to OpenSubtitles to look for an
               alternate subtitle; the returned text is analyzed locally. No
               analytics or remote code is used.
@@ -398,7 +401,7 @@
       </main>
 
       <footer class="page-footer">
-        <span>CleanVid <span id="footerVersion">v1.3.0</span></span>
+        <span>CleanVid <span id="footerVersion">v2.0.0</span></span>
         <span>Built for Chrome and Edge · Manifest V3</span>
       </footer>
     </div>

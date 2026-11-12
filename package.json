@@ -2,7 +2,7 @@
   "name": "cleanvid",
   "version": "2.0.0",
   "private": true,
-  "description": "CleanVid — mute and mask profanity on YouTube using closed captions.",
+  "description": "CleanVid — mute and mask profanity on YouTube using on-device speech recognition and closed captions.",
   "scripts": {
     "test": "node --test tests/matching.test.mjs tests/captions.test.mjs tests/settings.test.mjs tests/audio.test.mjs",
     "icons": "node tools/make-icons.mjs",
